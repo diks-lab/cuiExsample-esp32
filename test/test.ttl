@@ -1,0 +1,292 @@
+; esp32-cui-example Test
+
+; テスト用文字列設定
+pass_code   = '0000'
+wifi_ssid   = 'ESP32-DummyAP'
+wifi_key    = '12345678'
+host_name   = '192.168.1.110'
+upload_api  = '/cgi-bin/target/do'
+upload_key  = '1234567890'
+user_name   = 'user-01'
+target_name = 'RED-001'
+
+goto main
+end
+
+; ===========================================================
+; ==== TEST10 TOPメニューからWifi 関連の設定をする =============
+:test10
+
+pause 2
+send $0D                                          ; 1.Wifi Menu を選択
+pause 2
+send $0D                                          ; 1.Wifi ssid Setup を選択
+
+pause 2
+send $09                                          ; [Tab]キーでWifi Scan
+pause 8
+send '1'                                          ; '1'を選択
+pause 3
+send $0D
+
+pause 3
+send $0D                                          ; 1.Wifi ssid Setup を再度選択
+
+pause 3
+send $7F                                          ; [Del]キーで元の入力値を消去
+
+pause 2
+strbuf = wifi_ssid
+call strsend                                      ; SSIDを入力
+pause 2
+send $0D
+
+pause 2
+send $1B $5B $42                                  ; [↓]キー
+pause 2
+send $0D                                          ; 2.Wifi key Setup を選択
+
+pause 2
+strbuf = wifi_key
+call strsend
+pause 2
+send $0D
+
+pause 2
+send $1B $5B $42                                  ; [↓]キー
+mpause 500
+send $1B $5B $42                                  ; [↓]キー
+pause 2
+send $0D                                          ; 3.wifi Connect
+
+pause 3
+send $1B                                          ; TOPメニューへ
+return
+
+; ===========================================================
+; ==== TEST20 TOPメニューからServer 関連の設定をする =============
+:test20
+
+pause 2
+send $1B $5B $42                                  ; [↓]キー
+
+pause 2
+send $0D                                          ; 2.Server Menu
+
+pause 2
+send $0D                                          ; 2-1.Host Name Setup を選択
+
+pause 2
+strbuf = host_name
+call strsend
+pause 2
+send $0D
+
+pause 2
+send $1B $5B $42                                  ; [↓]キー
+pause 2
+send $0D                                          ; 2-2.Upload API Setup を選択
+
+pause 2
+strbuf = upload_api
+call strsend
+pause 2
+send $0D
+
+pause 2
+send $1B $5B $42                                  ; [↓]キー
+mpause 500
+send $1B $5B $42                                  ; [↓]キー
+pause 2
+send $0D                                          ; 2-3.Upload KEY Setup を選択
+
+pause 2
+strbuf = upload_key
+call strsend
+pause 2
+send $0D
+
+pause 2
+send $1B $5B $42                                  ; [↓]キー
+mpause 500
+send $1B $5B $42                                  ; [↓]キー
+mpause 500
+send $1B $5B $42                                  ; [↓]キー
+pause 2
+send $0D                                          ; 2-4.User Name Setup を選択
+
+pause 2
+strbuf = user_name
+call strsend
+pause 2
+send $0D
+
+pause 2
+send $1B $5B $42                                  ; [↓]キー
+mpause 500
+send $1B $5B $42                                  ; [↓]キー
+mpause 500
+send $1B $5B $42                                  ; [↓]キー
+mpause 500
+send $1B $5B $42                                  ; [↓]キー
+pause 2
+send $0D                                          ; 2-5.Target Name Setup を選択
+
+pause 2
+strbuf = target_name
+call strsend
+pause 2
+send $0D
+
+pause 4
+send $1B                                          ; TOPメニューへ
+return
+
+; ===========================================================
+; ==== TEST03 TOPメニュー 3.Config Info ==========
+:test03
+pause 2
+send '3'
+pause 3
+send $0D
+return
+; ===========================================================
+; ==== TEST04 TOPメニュー 4.Change Pass Code ==========
+:test04
+return
+; ===========================================================
+; ==== TEST05 TOPメニュー 5.Clear Config ==========
+:test05
+pause 2
+send '5'                                          ; 5.Clear Config
+pause 2
+send $0D
+
+return
+
+; ===========================================================
+; ==== TEST01 TOPメニューを1階層ずつ選択してTOPに戻る ==========
+:test01
+
+pause 2
+send $0D                                          ; 1.Wifi Menu を選択
+pause 3
+send $1B                                          ; [Return]
+
+pause 1
+send $1B $5B $42                                  ; [↓]キー
+pause 2
+send $0D                                          ; 2.Server Menu を選択
+pause 3
+send $1B                                          ; [Return]
+
+pause 2
+send $1B $5B $42                                  ; [↓]キー
+mpause 500
+send $1B $5B $42                                  ; [↓]キー
+mpause 500
+send $0D                                          ; 3.Config Info を選択
+pause 3
+send $1B                                          ; [Return]
+
+pause 2
+send $1B $5B $42                                  ; [↓]キー
+mpause 500
+send $1B $5B $42                                  ; [↓]キー
+mpause 500
+send $1B $5B $42                                  ; [↓]キー
+mpause 500
+send $0D                                          ; 4.Change Pass Code
+pause 3
+send $1B                                          ; [Return]
+
+pause 2
+send $1B $5B $42                                  ; [↓]キー
+mpause 500
+send $1B $5B $42                                  ; [↓]キー
+mpause 500
+send $1B $5B $42                                  ; [↓]キー
+mpause 500
+send $1B $5B $42                                  ; [↓]キー
+mpause 500
+send $0D                                          ; 5.Clear Config
+pause 3
+send $1B                                          ; [Return]
+pause 2
+
+send '6'                                          ; 6.Exit
+return
+
+; ===========================================================
+; ==== TEST00 通常モードからConfigモードに移行後Exitを選択して通常モードに移行する。
+:test00
+send '6'                                          ; 6.Exit
+return
+
+; ===========================================================
+; TERA MACRO 初期設定 ----------------------------------------
+:init
+
+connect '/C=5 /BAUD=115200'                       ; ESP32はCOM5に接続されている
+show -1                                           ; 進行状況のポップアップ非表示
+return
+
+; ===========================================================
+; パスコード入力 ---------------------------------------------
+:inputPass
+pause 3
+send $0D                                          ; Configモードへ移行
+pause 2
+
+strbuf = pass_code
+call strsend
+send $0D
+pause 2
+return
+
+; ===========================================================
+; 文字列送信 -------------------------------------------------
+:strsend
+strlen strbuf
+len = result
+for i 1 len
+  strcopy strbuf i 1 c
+  send c
+  mpause 300
+next
+return
+
+; ===========================================================
+; メイン処理 -------------------------------------------------
+:main
+
+call init                                         ; MACRO 初期設定
+
+pause 10
+
+call inputPass
+
+call test05                                       ; 5.Clear Config
+
+;call test00  ; 通常モードからConfigモードに移行後Exitを選択して通常モードに移行する。
+;call test01  ; TOPメニューを1階層ずつ選択してTOPに戻る
+
+call test10  ; TOPメニューからWifi 関連の設定をする
+pause 2
+call test03                                       ; 3.Config Info
+pause 5
+call test20  ; TOPメニューからServer 関連の設定をする
+pause 3
+call test03                                       ; 3.Config Info
+pause 3
+
+; 6.Exit
+pause 10
+send $1B
+
+pause 5
+disconnect 0
+pause 3
+closett
+end
+; ===========================================================

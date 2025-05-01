@@ -168,8 +168,8 @@ private:
   void printle(uint8_t row, uint8_t col, String str, text_attribute_t attr = NORMAL);
 
   config_t _emm;
-  message_t _err;
-  message_t _info;
+  message_t _err{.attr = ERROR};
+  message_t _info{.attr = NORMAL};
 
   wifi_status_t _wifi_status = DISCONNECTED;
   int8_t _menu_num = -1;

@@ -2,6 +2,7 @@
 # CUI メニュー
 
 ## EEPROM 保存フォーマット
+'''
 typedef struct
 {
   int version;
@@ -21,7 +22,7 @@ typedef struct
   char pass[4 + 1];
   char end;
 } config_t;
-
+'''
 ### Tera Term環境
 Version : 5.2で確認
 [シリアルポート(E)]
@@ -41,6 +42,7 @@ Version : 5.2で確認
   5回失敗で初期化
 
 ### メニュー階層
+'''
 TOP Menu
  1.WiFi Setup
  2.Server Setup
@@ -59,6 +61,6 @@ SERVER Menu (Top -> 2.Server Setup)
  3.Upload KEY Setup
  4.User Name Setup
  Target Name Setup
-
+'''
 ### Wifi スキャン
 表示最大 5局

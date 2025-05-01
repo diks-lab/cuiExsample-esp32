@@ -399,7 +399,6 @@ void CConfig::menu13()
       _err.row = s_row + 3;
       _err.col = 32;
       _err.text = "Connect Error!";
-      _err.attr = ERROR;
     }
   }
   else
@@ -407,7 +406,6 @@ void CConfig::menu13()
     _err.row = 15;
     _err.col = 7;
     _err.text = "** No Wifi SSID and KEY are set.";
-    _err.attr = ERROR;
   }
   _menu_num = 1;
 }
@@ -674,9 +672,6 @@ pass_check_t CConfig::passCheck(void)
   return_key_t ret;
   char pass_code[5];
 
-  //  if (_pass_flag)
-  //    return CHECK_OK;
-
   Serial << "\033[2J";
   while (0 < retry--)
   {
@@ -750,7 +745,6 @@ void CConfig::wifiConnect(void)
     _err.row = row + 1;
     _err.col = col;
     _err.text = "** Wifi ssid and key are not set.";
-    _err.attr = ERROR;
     _menu_num = bmenu;
     return;
   }

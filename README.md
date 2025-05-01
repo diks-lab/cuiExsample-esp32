@@ -1,8 +1,28 @@
-# cuiExsample-esp32
 # CUI メニュー
 
-## EEPROM 保存フォーマット
-'''
+### メニュー構造
+```
+TOP Menu
+ 1.WiFi Setup
+ 2.Server Setup
+ 3.Config View
+ 4.Change Pass Code
+ 5.Clear Config
+
+WIFI Menu (Top -> 1.WiFi Setup)
+ 1-1.wifi ssid Setup
+ 1-2.wifi key Setup
+ 1-3.wifi Connect
+
+SERVER Menu (Top -> 2.Server Setup)
+ 2-1.Host Name Setup
+ 2-2.Upload API Setup
+ 2-3.Upload KEY Setup
+ 2-4.User Name Setup
+ 2-5.Target Name Setup
+```
+### EEPROM 保存フォーマット
+```
 typedef struct
 {
   int version;
@@ -22,45 +42,25 @@ typedef struct
   char pass[4 + 1];
   char end;
 } config_t;
-'''
+```
 ### Tera Term環境
 Version : 5.2で確認
-[シリアルポート(E)]
+1. [シリアルポート(E)]
 *  SPEED: 115200bps
 *  Data: 8bit
 *  Parity: None
 *  StopBit: 1bit
 *  Flow : None
-[端末(T)]
+2. [端末(T)]
 * 改行コード
-   受信 : CR
-   送信 : CR
+  * 受信 : CR
+  * 送信 : CR
 * Local Echo: None
 
 ### パスコード
- 初期値 : [0000]
-  5回失敗で初期化
+* 初期値 : [0000]
+*  5回失敗で初期化
 
-### メニュー階層
-'''
-TOP Menu
- 1.WiFi Setup
- 2.Server Setup
- 3.Config View
- 4.Change Pass Code
- 5.Clear Config
 
-WIFI Menu (Top -> 1.WiFi Setup)
- 1.wifi ssid Setup
- 2.wifi key Setup
- 3.wifi Connect
-
-SERVER Menu (Top -> 2.Server Setup)
- 1.Host Name Setup
- 2.Upload API Setup
- 3.Upload KEY Setup
- 4.User Name Setup
- Target Name Setup
-'''
 ### Wifi スキャン
 表示最大 5局

@@ -357,9 +357,9 @@ void CConfig::menu11()
   textInput(13, 1, _emm.wifi.ssid, sz_wifi_ssid);
   if (_write_flag)
   {
-    memset(_ip_address, 0, sizeof(_ip_address));
     printle(s_row + 1, 30, ">  " + String(_emm.wifi.ssid));
-    printle(s_row + 3, 30, "");
+    memset(_ip_address, 0, sizeof(_ip_address));
+    printle(s_row + 3, 30, String(_ip_address));
     writeMemory();
     _ssid_flag = isExist(_emm.wifi.ssid) && isExist(_emm.wifi.key);
     _wifi_status = DISCONNECTED;
@@ -376,9 +376,10 @@ void CConfig::menu12()
   textInput(14, 3, _emm.wifi.key, sz_wifi_key, true);
   if (_write_flag)
   {
+    if (isExist(_emm.wifi.key))
+      printle(s_row + 2, 30, ">  **************");
     memset(_ip_address, 0, sizeof(_ip_address));
-    printle(s_row + 2, 30, ">  " + String(_emm.wifi.key));
-    printle(s_row + 3, 30, "");
+    printle(s_row + 3, 30, String(_ip_address));
     writeMemory();
     _ssid_flag = isExist(_emm.wifi.ssid) && isExist(_emm.wifi.key);
     _wifi_status = DISCONNECTED;
